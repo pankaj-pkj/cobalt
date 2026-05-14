@@ -17,6 +17,12 @@ RUN pnpm deploy --filter=@imput/cobalt-api --prod /prod/api
 FROM base AS api
 WORKDIR /app
 
+# --- FIX START: Environment Variables to bypass Git Error ---
+ENV COBALT_SKIP_GIT_INFO=true
+ENV API_URL=https://cobalt-mfur.onrender.com
+ENV NODE_ENV=production
+# --- FIX END ---
+
 COPY --from=build --chown=node:node /prod/api /app
 
 USER node
